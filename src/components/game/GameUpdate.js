@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useNavigate, useParams } from 'react-router-dom'
-import { createGame, getGameTypes, getSingleGame, updateGame } from '../../managers/GameManager.js'
+import { getGameTypes, getSingleGame, updateGame } from '../../managers/GameManager.js'
 
 
 
@@ -108,9 +108,9 @@ export const UpdateGame = () => {
 
                     // Send POST request to your API
                     updateGame(game)
-                        .then(() => navigate("/games"))
-                }}
-                className="btn btn-primary">Update</button>
+                        .then(() => navigate({ pathname:"/games"}))
+                    }}
+                className="btn btn-primary">Update Game</button>
         </form>
     )
 }

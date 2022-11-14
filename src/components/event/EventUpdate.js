@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useNavigate, useParams } from 'react-router-dom'
-import { createEvent, getSingleEvent } from "../../managers/EventManager.js"
+import { createEvent, getSingleEvent, updateEvent } from "../../managers/EventManager.js"
 import { getGames } from '../../managers/GameManager.js'
 
 
@@ -8,7 +8,7 @@ export const UpdateEvent = () => {
     const navigate = useNavigate()
     const { eventId } = useParams()
     const [currentEvent, setCurrentEvent] = useState({
-        game: 0,
+        game: [],
         description: "",
         date: "",
         time: ""
@@ -17,7 +17,7 @@ export const UpdateEvent = () => {
 
     useEffect(() => {
         //fetching the game options for the events
-        getSingleEvent(eventId).then(data => setGames(data))
+        getSingleEvent(eventId).then(data => setCurrentEvent(data))
     }, [])
 
 
@@ -89,6 +89,7 @@ export const UpdateEvent = () => {
                     evt.preventDefault()
 
                     const event = {
+                        id: eventId,
                         gameToPlay: currentEvent.game,
                         description: currentEvent.description,
                         dateOfEvent: currentEvent.date,
@@ -96,10 +97,10 @@ export const UpdateEvent = () => {
                     }
 
                     // Send POST request to your API
-                    createEvent(event)
-                        .then(() => navigate("/events"))
+                    updateEvent(event)
+                    .then(() => navigate({ pathname:"/events"}))
                 }}
-                className="btn btn-primary">Create</button>
+                className="btn btn-primary">Update Info!</button>
         </form>
     )
 }
